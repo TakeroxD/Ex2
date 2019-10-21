@@ -9,7 +9,7 @@ app.get('/',function(req,res){
 
 app.get('/students/:id',function(req,res){
 	if(req.params.id != 'A00817381'){
-		res.send({error: 'Esa matrícula no es mía >:(  (este mensaje se considera adecuado)'})
+		return res.send({error: 'Esa matrícula no es mía >:(  (este mensaje se considera adecuado)'})
 	}
 	res.send({
 		id: req.params.id,
@@ -26,12 +26,12 @@ app.get('/met',function(req,res){
 		var searchTerm = req.query.search
 		met.searchMetObjects(req.query.search,function(error,response){
 			if(error){
-				res.send(error)
+				return res.send(error)
 			}
 			var objectID = response
 			met.getMetObject(objectID,function(error,response){
 				if(error){
-					res.send(error)
+					return res.send(error)
 				} else {
 					res.send({
 						searchTerm: searchTerm,
