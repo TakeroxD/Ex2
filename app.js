@@ -21,28 +21,31 @@ app.get('/students/:id',function(req,res){
 
 app.get('/met',function(req,res){
 	if(!req.query.search){
-		res.send({error: 'No se recibio search'})
-	}
-	met.searchMetObjects(req.query.search,function(error,response){
-		if(error){
-			res.send(error)
-		}
-		var objectID = response
-		met.getMetObject(objectID,function(error,response){
+		res.send({error: 'No hay search'})
+	} else {
+		var searchTerm = req.query.search
+		met.searchMetObjects(req.query.search,function(error,response){
 			if(error){
 				res.send(error)
 			}
-			res.send({
-				searchTerm:req.query.search,
-				artist: response.artist,
-				title: response.title,
-				year: response.year,
-				technique: response.technique,
-				metUrl: response.metUrl,
-				image: response.image
+			var objectID = response
+			met.getMetObject(objectID,function(error,response){
+				if(error){
+					res.send(error)
+				} else {
+					res.send({
+						searchTerm: searchTerm,
+						artist: response.artist,
+						title: response.title,
+						year: response.year,
+						technique: response.technique,
+						metUrl: response.metUrl,
+						image: response.image
+					})
+				}
 			})
 		})
-	})
+	}
 
 })
 

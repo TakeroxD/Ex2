@@ -6,7 +6,7 @@ const searchMetObjects = function(toSearch, callback){
 		if(error){
 			callback(error,undefined)
 		} else if(response.body.objectIDs == null){
-			callback('No search results',undefined)
+			callback({error:'No search results'},undefined)
 		} else {
 			callback(undefined,response.body.objectIDs[0])
 		}
